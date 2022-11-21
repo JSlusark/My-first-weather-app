@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="src/style.css" rel="stylesheet" type="text/css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+      crossorigin="anonymous"
+    />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;1,200;1,300;1,400;1,600;1,700;1,800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+    <script
+      src="https://kit.fontawesome.com/ab519d0da2.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>Weather app</title>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="app">
+        <div class="searchcontainer row align-items-center">
+          <div class="col"></div>
+          <div class="col submitsection">
+            <form action="submit" id="citysearch">
+              <input
+                type="text"
+                id="city"
+                class="typecity"
+                placeholder="Type in city..."
+              />
+              <button class="search" id="searchicon"><i class="fa-solid fa-magnifying-glass searchicon"></i></button>
+             </form>
+             <button class="location" id="locationicon"> <i class="fa-sharp fa-solid fa-location-crosshairs"></i> </button>
+          </div>
+        </div>
+
+        <div class="row align-items-center" style="height: 187px">
+          <div class="col mainimage" style="padding: 0; margin-bottom: 50px">
+            <img
+              src="https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/clear-day.svg"
+              alt="Sunny"
+              class="weathericonmain"
+            />
+          </div>
+          <div class="col descriptionleft">
+            <div class="row align-items-center" style="width: 111px">
+              <h2
+                id="mainTemp"
+                class="col temptitle"
+                style="
+                  padding: 0;
+                  font-size: 40px;
+                  text-align: right;
+                  width: 20px;
+                "
+              >
+                25
+              </h2>
+              <h2
+                class="degrees col"
+                style="
+                  padding: 0;
+                  font-size: 15px;
+                  text-align: left;
+                  margin-bottom: 25px;
+                  color: #ffffff30;
+                  font-weight: 300;
+                "
+              >
+                <span class="degrees" style="font-weight: normal" id="C"
+                  >°C</span
+                ><span class="stick">|</span
+                ><span class="fareneit" id="F">°F</span>
+              </h2>
+            </div>
+            <p class="detailsleft">
+              Precipitation: 88%
+              <br />
+              Humidity: 74%
+              <br />
+              Wind: 10 mph
+            </p>
+          </div>
+          <div class="col descriptionright">
+            <h2 class="citytitle" id="citytitle">Paris</h2>
+            <p class="detailsright">
+              <span id="line1r">8 November 2022</span><br />
+              <span id="line2r">Sunday, 15:00</span><br />
+              <span id="weather">Sunny</span>
+              <br />
+            </p>
+          </div>
+        </div>
+        <div class="row align-items-center" style="margin-top: 40px">
+          <div class="col week">
+            <p class="dayname">Mon</p>
+            <img
+              src="https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/cloudy.svg"
+              alt="cloudy"
+              class="weathericon"
+            />
+            <p class="ptemp"><span id="t1">20</span>°</p>
+          </div>
+          <div class="col week">
+            <p class="dayname">Tue</p>
+            <img
+              src="https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/partly-cloudy-day.svg"
+              alt="cloudy with sun"
+              class="weathericon"
+            />
+            <p class="ptemp"><span id="t2">18</span>°</p>
+          </div>
+          <div class="col week">
+            <p class="dayname">Wed</p>
+            <img
+              src="https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/rain.svg"
+              alt="rainy"
+              class="weathericon"
+            />
+            <p class="ptemp"><span id="t3">12</span>°</p>
+          </div>
+          <div class="col week">
+            <p class="dayname">Thu</p>
+            <img
+              src="https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/thunderstorms-overcast-rain.svg"
+              alt="storm"
+              class="weathericon"
+            />
+            <p class="ptemp"><span id="t4">17</span>°</p>
+          </div>
+          <div class="col week">
+            <p class="dayname">Fri</p>
+            <img
+              src="https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/rain.svg"
+              alt="rainy"
+              class="weathericon"
+            />
+            <p class="ptemp"><span id="t5">17</span>°</p>
+          </div>
+          <div class="col week">
+            <p class="dayname">Sat</p>
+            <img
+              src="https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/partly-cloudy-day-drizzle.svg"
+              alt="cloudy"
+              class="weathericon"
+            />
+            <p class="ptemp"><span id="t6">17</span>°</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="src/index.js"></script>
+  </body>
+</html>
