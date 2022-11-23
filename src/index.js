@@ -1,3 +1,45 @@
+// Current date and time - DONE
+let week = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday"
+];
+
+let monthcycle = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December"
+];
+
+let now = new Date();
+let day = now.getDate();
+let weekday = week[now.getDay()];
+let month = monthcycle[now.getMonth()];
+let year = now.getFullYear();
+let hours = now.getHours();
+let minutes = now.getMinutes();
+let time = (`0` + hours).slice(-2) + `:` + (`0` + minutes).slice(-2);
+
+let lineOneRight = document.querySelector("#line1r");
+let lineTwoRight = document.querySelector("#line2r");
+
+lineOneRight.innerHTML = `${day} ${month} ${year}`;
+lineTwoRight.innerHTML = `${weekday}, ${time}`;
+//________________________________________________  
+
 // nextdays
 let temp1 = document.querySelector("#t1");
 let temp2 = document.querySelector("#t2");
@@ -38,14 +80,14 @@ function citySearch(event) {
     let apiKey = "f5029b784306910c19746e40c14d6cd3";
     let apiGeocode = `https://api.openweathermap.org/data/2.5/weather?q=${finalCity}&appid=${apiKey}`;
     axios.get(`${apiGeocode}&&units=metric`).then(cityTemperature)
+    cTemperature();
 
-    // gives temperature when writing a new city 
+    // gives Ctemperature when writing a new city 
     function cityTemperature(response) {
       let searchedCityTemp = Math.floor(response.data.main.temp)
       console.log(finalCity + " " + searchedCityTemp)
       //change main temperature
-      mainTempertature.innerHTML = searchedCityTemp
-    
+      mainTempertature.innerHTML = searchedCityTemp    
     }
   }
 
@@ -57,6 +99,7 @@ form.addEventListener("submit", citySearch);
 //location button detectslocation and then calls showTemperature function 👆)
 function detectLocation(location) {
   navigator.geolocation.getCurrentPosition(myPosition);
+  locationButton.removeEventListener("click", detectLocation);
 
   function myPosition(position) {
     let lat = position.coords.latitude;
@@ -65,13 +108,14 @@ function detectLocation(location) {
     let apiKey = "f5029b784306910c19746e40c14d6cd3";
     let apiGeocode = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`;
     axios.get(`${apiGeocode}&&units=metric`).then(showTemperature);
+    cTemperature();
   }}
 
 let locationButton = document.querySelector("#locationicon")
 locationButton.addEventListener("click", detectLocation)
 
 
-//Show temperature of typed or geolocated city
+//Show Ctemperature of typed or geolocated city
 function showTemperature(celsius) {
   let locationTemp = Math.floor(celsius.data.main.temp);
   let detectedLocationName = celsius.data.name;
@@ -80,66 +124,31 @@ function showTemperature(celsius) {
   cityTitle.innerHTML = detectedLocationName;
 }
 
-
-
-
-
 function cTemperature(cNumber) {
-  mainTempertature.innerHTML = Math.round((mainTempertature.innerHTML-32)* 5/9 );
+  console.log(mainTempertature.innerHTML)
+  let celsiusTemp = Math.round((mainTempertature.innerHTML-32)* 5/9 );
+  mainTempertature.innerHTML = celsiusTemp;
   celsius.style.color = "#ffffff";
   fahrenight.style.color = "#ffffff30";
-celsius.style.noHover = true;
+  console.log(mainTempertature.innerHTML);
+  celsius.removeEventListener("click", cTemperature);
+  fahrenight.addEventListener("click", fTemperature);
 }
 celsius.addEventListener("click", cTemperature);
-
 
 function fTemperature(fNumber) {
   mainTempertature.innerHTML = Math.round((mainTempertature.innerHTML * 9) / 5 + 32);
   console.log(mainTempertature.innerHTML)
   celsius.style.color = "#ffffff30";
   fahrenight.style.color = "#ffffff";
+  celsius.addEventListener("click", cTemperature);
+  fahrenight.removeEventListener("click", fTemperature);
 }
 fahrenight.addEventListener("click", fTemperature);
 
 
-// week and monthcycle array
-let week = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday"
-];
 
-let monthcycle = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December"
-];
 
-let now = new Date();
-let day = now.getDate();
-let weekday = week[now.getDay()];
-let month = monthcycle[now.getMonth()];
-let year = now.getFullYear();
-let hours = now.getHours();
-let minutes = now.getMinutes();
-let time = (`0` + hours).slice(-2) + `:` + (`0` + minutes).slice(-2);
 
-let lineOneRight = document.querySelector("#line1r");
-let lineTwoRight = document.querySelector("#line2r");
 
-lineOneRight.innerHTML = `${day} ${month} ${year}`;
-lineTwoRight.innerHTML = `${weekday}, ${time}`;
 

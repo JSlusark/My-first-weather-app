@@ -91,13 +91,13 @@ input::placeholder {
 /* color hover doesn't happen after F is selected but pointer changes as expected (from text pounter to default) - create JS function on hover?*/
 #C:hover {
   cursor: pointer !important;
-  color: rgb(114, 255, 231) !important;
+  color:aliceblue !important;
 }
 
 /* color hover doesn't happen after F is selected but pointer changes as expected (from text pounter to default) - create JS function on hover?*/
 #F:hover {
   cursor: pointer !important;
-  color: rgb(114, 255, 231) !important;
+  color: aliceblue !important;
 }
 
 .temptitle,
