@@ -49,81 +49,48 @@ let temp5 = document.querySelector("#t5");
 let temp6 = document.querySelector("#t6");
 let cityTitle = document.querySelector("#citytitle");
 let mainTempertature = document.querySelector("#mainTemp");
-console.log("check below");
-console.log(mainTempertature.innerHTML + cityTitle.innerHTML);
 let fahrenight = document.querySelector("#F");
 let celsius = document.querySelector("#C");
+let apiKey = "appid=f5029b784306910c19746e40c14d6cd3";
+let apiGeocode = `https://api.openweathermap.org/data/2.5/weather?`;
+console.log(`predefined temp: ${mainTempertature.innerHTML} + ${cityTitle.innerHTML}`);
 
-//show predefined temperature
-function predefinedTemperature (berlinTemperature) {
-  let apiKey = "f5029b784306910c19746e40c14d6cd3";
-  let apiGeocode = `https://api.openweathermap.org/data/2.5/weather?q=${cityTitle.innerHTML}&appid=${apiKey}`;
-  axios.get(`${apiGeocode}&&units=metric`).then(showTemperature);}
- 
-  predefinedTemperature();
-
-  // City search
-
-function citySearch(event) {
-  event.preventDefault();
-  let tipedCity = document.querySelector("#city"); //h2select
-  let writtenCity = tipedCity.value.trim(); //what has been written in H2
-  let finalCity =
-    writtenCity.charAt(0).toUpperCase() + writtenCity.slice(1).toLowerCase();
-  cityTitle.innerHTML = finalCity;
-
-  console.log(tipedCity)
-  console.log(writtenCity)
-    console.log(finalCity)
-    
-// weather APIs
-    let apiKey = "f5029b784306910c19746e40c14d6cd3";
-    let apiGeocode = `https://api.openweathermap.org/data/2.5/weather?q=${finalCity}&appid=${apiKey}`;
-    axios.get(`${apiGeocode}&&units=metric`).then(cityTemperature)
-    cTemperature();
-
-    // gives Ctemperature when writing a new city 
-    function cityTemperature(response) {
-      let searchedCityTemp = Math.floor(response.data.main.temp)
-      console.log(finalCity + " " + searchedCityTemp)
-      //change main temperature
-      mainTempertature.innerHTML = searchedCityTemp    
-    }
+// Show temperature for cityTitle  
+function cityTemperature(response) {
+  let searchedCityTemp = Math.floor(response.data.main.temp)
+  cityTitle.innerHTML= response.data.name
+  mainTempertature.innerHTML = searchedCityTemp
+  console.log("City Title: " + cityTitle.innerHTML + " City Temp: " + searchedCityTemp)  
   }
 
+//Type of cityTitles
+//1. Pre-defined
+axios.get(`${apiGeocode}q=${cityTitle.innerHTML}&${apiKey}&&units=metric`).then(cityTemperature);
 
+//2. Form submission
+function citySearch(event) {  
+  event.preventDefault();
+  let tipedCity = document.querySelector("#city").value.trim(); //h2select
+  axios.get(`${apiGeocode}q=${tipedCity}&${apiKey}&&units=metric`).then(cityTemperature);
+  locationButton.addEventListener("click", detectLocation);
+}
 let form = document.querySelector("#citysearch");
 form.addEventListener("submit", citySearch);
 
 
-//location button detectslocation and then calls showTemperature function 👆)
+//3. Geolocation button 
 function detectLocation(location) {
   navigator.geolocation.getCurrentPosition(myPosition);
-  locationButton.removeEventListener("click", detectLocation);
-
-  function myPosition(position) {
-    let lat = position.coords.latitude;
-    let lon = position.coords.longitude;
-  console.log(`lat:${lat} lon:${lon}`);
-    let apiKey = "f5029b784306910c19746e40c14d6cd3";
-    let apiGeocode = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`;
-    axios.get(`${apiGeocode}&&units=metric`).then(showTemperature);
-    cTemperature();
-  }}
-
+  locationButton.removeEventListener("click", detectLocation);}
+ function myPosition(position) {
+  let lat = `lat=${position.coords.latitude}`;
+  let lon = `lon=${position.coords.longitude}`;
+  console.log(lat + "" + lon);
+  axios.get(`${apiGeocode}${lat}&${lon}&${apiKey}&&units=metric`).then(cityTemperature);}
 let locationButton = document.querySelector("#locationicon")
 locationButton.addEventListener("click", detectLocation)
 
-
-//Show Ctemperature of typed or geolocated city
-function showTemperature(celsius) {
-  let locationTemp = Math.floor(celsius.data.main.temp);
-  let detectedLocationName = celsius.data.name;
-  console.log(`detectedLocationName:${detectedLocationName} locationTemp:${locationTemp}`);
-  mainTempertature.innerHTML = locationTemp;
-  cityTitle.innerHTML = detectedLocationName;
-}
-
+//celsius and fahrenight change
 function cTemperature(cNumber) {
   console.log(mainTempertature.innerHTML)
   let celsiusTemp = Math.round((mainTempertature.innerHTML-32)* 5/9 );

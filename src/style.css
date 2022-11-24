@@ -100,10 +100,17 @@ input::placeholder {
   color: aliceblue !important;
 }
 
-.temptitle,
-.citytitle {
+.temptitle{
   font-size: 40px;
 }
+
+.citytitle{
+  font-size: 40px;
+  text-transform: capitalize;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .detailsleft,
 .detailsright {
   font-weight: 100;
@@ -114,6 +121,8 @@ input::placeholder {
 
 .descriptionright {
   text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .week {
@@ -139,4 +148,8 @@ input::placeholder {
   margin-bottom: 0px;
   font-size: 10px;
   font-weight: 300;
+}
+
+#city {
+  text-transform: capitalize;
 }
