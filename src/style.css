@@ -153,3 +153,5 @@ input::placeholder {
 #city {
   text-transform: capitalize;
 }
+
+.copyright { text-align: center; font-size: small;}
