@@ -48,8 +48,9 @@
           <div class="col mainimage" style="padding: 0; margin-bottom: 50px">
             <img
               src="https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/clear-day.svg"
-              alt="Sunny"
+              alt="main weather icon"
               class="weathericonmain"
+              id="weathericon"
             />
           </div>
           <div class="col descriptionleft">
@@ -84,11 +85,11 @@
               </h2>
             </div>
             <p class="detailsleft">
-              Precipitation: 88%
+              <span id="weather"> </span>
               <br />
-              Humidity: 74%
+              Humidity: <span id="humidity"> </span>%
               <br />
-              Wind: 10 mph
+              Wind: <span id="wind"> </span> km/h
             </p>
           </div>
           <div class="col descriptionright";>
@@ -96,7 +97,6 @@
             <p class="detailsright">
               <span id="line1r">8 November 2022</span><br />
               <span id="line2r">Sunday, 15:00</span><br />
-              <span id="weather">Sunny</span>
               <br />
             </p>
           </div>

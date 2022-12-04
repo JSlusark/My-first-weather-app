@@ -49,18 +49,34 @@ let temp5 = document.querySelector("#t5");
 let temp6 = document.querySelector("#t6");
 let cityTitle = document.querySelector("#citytitle");
 let mainTempertature = document.querySelector("#mainTemp");
+let humidity = document.querySelector("#humidity");
+let wind = document.querySelector("#wind");
+let weather = document.querySelector("#weather");
 let fahrenight = document.querySelector("#F");
 let celsius = document.querySelector("#C");
 let apiKey = "appid=f5029b784306910c19746e40c14d6cd3";
 let apiGeocode = `https://api.openweathermap.org/data/2.5/weather?`;
+let weatherIcon = document.querySelector("#weathericon");
+let apiIcon = `https://openweathermap.org/img/wn/`; //+ 01.png
 console.log(`predefined temp: ${mainTempertature.innerHTML} + ${cityTitle.innerHTML}`);
+console.log("weathericon: " + weatherIcon.innerHTML);
+
 
 // Show temperature for cityTitle  
 function cityTemperature(response) {
   let searchedCityTemp = Math.floor(response.data.main.temp)
   cityTitle.innerHTML= response.data.name
+  humidity.innerHTML = response.data.main.humidity
+  wind.innerHTML = Math.round(response.data.wind.speed * 1.852) // check if accurate kts
+  weather.innerHTML = response.data.weather[0].description
+  console.log("humidity: " + response.data.main.humidity)
+  console.log("wind: " + response.data.wind.speed)
+  console.log("weather: " + response.data.weather[0].description)
   mainTempertature.innerHTML = searchedCityTemp
-  console.log("City Title: " + cityTitle.innerHTML + " City Temp: " + searchedCityTemp)  
+  console.log("City Title: " + cityTitle.innerHTML + " City Temp: " + searchedCityTemp)
+  let mainIcon = apiIcon+(response.data.weather[0].icon)+"@2x.png";
+  console.log(response.data.weather[0].icon);
+  weatherIcon.setAttribute("src", `${mainIcon}`);
   }
 
 //Type of cityTitles
@@ -112,7 +128,6 @@ function fTemperature(fNumber) {
   fahrenight.removeEventListener("click", fTemperature);
 }
 fahrenight.addEventListener("click", fTemperature);
-
 
 
 
