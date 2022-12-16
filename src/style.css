@@ -89,15 +89,21 @@ margin-top: 14px ;}
   width: 130px
 };
 
-  .celsius {
-    font-weight: normal;
-    color: aliceblue ;}
-
   .stick {
     color: #ffffff30;}
 
+    .celsius {
+      font-weight: normal;
+      color: aliceblue;
+      border: 0;
+      background-color: transparent;
+      padding: 0;}    
+
   .fareneit {
     color: #ffffff30;
+    border: 0;
+    background-color: transparent;
+    padding: 0;
     }
     
   .degrees { 
@@ -106,13 +112,29 @@ font-size: 15px;}
   /* color hover doesn't happen after F is selected but pointer changes as expected (from text pounter to default) - create JS function on hover?*/
 
   #C:hover {
-    cursor: pointer !important;
-    color:aliceblue !important;}
+    cursor: pointer ;
+    color:aliceblue }
 
-/* color hover doesn't happen after F is selected but pointer changes as expected (from text pounter to default) - create JS function on hover?*/
+    #C:focus {
+      color: aliceblue
+    }
+
+#C:active{
+color: #64ffe8 ;}
+
+
+  /* color hover doesn't happen after F is selected but pointer changes as expected (from text pounter to default) - create JS function on hover?*/
 #F:hover {
-  cursor: pointer !important;
-  color: aliceblue !important;
+  cursor: pointer;
+  color: aliceblue ;
+}
+#F:focus {
+  color: aliceblue
+}
+#F:active{
+  color: #64ffe8 ;
+  font-size: 15.3px;
+ 
 }
 
 .temptitle{

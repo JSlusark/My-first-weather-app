@@ -61,23 +61,12 @@ let apiIcon = `https://openweathermap.org/img/wn/`; //+ 01.png
 
 // Daily Forecast fuction
 function displayForecast(response) {
-  //show days of week insetad of numbers
-  function formatDay(timestamp) {
-    let date = new Date(timestamp * 1000);
-    let day = date.getDay();
-    let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
-    return days[day];
-  }
-
   let forecast = response.data.daily;
   console.log(forecast);
-  console.log(forecast[0].dt);
   let forecastElement = document.querySelector("#forecast");
   let forecastHTML = ``;
-
-  forecast.forEach(function (forecastDay, index) {
-    if (index < 6) {
+  forecast.slice(1).forEach(function (forecastDay, index) {
+    if (index < 5) {
       forecastHTML =
         forecastHTML +
         `
@@ -100,6 +89,15 @@ function displayForecast(response) {
     }
   });
   forecastElement.innerHTML = forecastHTML;
+}
+
+//show days of week insetad of numbers
+function formatDay(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let day = date.getDay();
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+  return days[day];
 }
 
 // Show today temperature for cityTitle
@@ -165,17 +163,7 @@ let locationButton = document.querySelector("#locationicon");
 locationButton.addEventListener("click", detectLocation);
 
 //celsius and fahrenight change
-function cTemperature(cNumber) {
-  console.log(mainTempertature.innerHTML);
-  let celsiusTemp = Math.round(((mainTempertature.innerHTML - 32) * 5) / 9);
-  mainTempertature.innerHTML = celsiusTemp;
-  celsius.style.color = "#ffffff";
-  fahrenight.style.color = "#ffffff30";
-  console.log(mainTempertature.innerHTML);
-  celsius.removeEventListener("click", cTemperature);
-  fahrenight.addEventListener("click", fTemperature);
-}
-celsius.addEventListener("click", cTemperature);
+// dato in celsius non deve cambiare, perche' quei dati ce li ho gia, non conertire da f to c ma fatti dare il dato che hai gia'
 
 function fTemperature(fNumber) {
   mainTempertature.innerHTML = Math.round(
@@ -186,5 +174,17 @@ function fTemperature(fNumber) {
   fahrenight.style.color = "#ffffff";
   celsius.addEventListener("click", cTemperature);
   fahrenight.removeEventListener("click", fTemperature);
+
+  function cTemperature(cNumber) {
+    console.log(mainTempertature.innerHTML);
+    let celsiusTemp = Math.round(((mainTempertature.innerHTML - 32) * 5) / 9);
+    mainTempertature.innerHTML = celsiusTemp;
+    celsius.style.color = "#ffffff";
+    fahrenight.style.color = "#ffffff30";
+    console.log(mainTempertature.innerHTML);
+    celsius.removeEventListener("click", cTemperature);
+    fahrenight.addEventListener("click", fTemperature);
+  }
+  celsius.addEventListener("click", cTemperature);
 }
 fahrenight.addEventListener("click", fTemperature);
