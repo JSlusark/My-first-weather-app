@@ -78,14 +78,18 @@ function displayForecast(response) {
     class="weathericon"
   />
   </div>
-  <span class="ptemp"><span id="t1">${Math.round(
-    forecastDay.temp.min
-  )}</span>°</span>
-  <span class="ptemp"><span id="t1">${Math.round(
-    forecastDay.temp.max
-  )}</span>°</span>
+ <span id="t1">${Math.round(
+   forecastDay.temp.min
+ )}</span><span class="circle1">°</span>
+<span id="t2">${Math.round(
+          forecastDay.temp.max
+        )}</span><span class="circle2">°</span>
 </div>
 `;
+      //let minTemperatures = [Math.round(forecastDay.temp.min)];
+      //let maxTemperatures = [Math.round(forecastDay.temp.max)];
+      //console.log(Array.from(minTemperatures));
+      //console.log(Array.from(maxTemperatures));
     }
   });
   forecastElement.innerHTML = forecastHTML;
@@ -102,6 +106,7 @@ function formatDay(timestamp) {
 
 // Show today temperature for cityTitle
 function cityTemperature(response) {
+  console.log(response);
   let searchedCityTemp = Math.round(response.data.main.temp);
   cityTitle.innerHTML = response.data.name;
   humidity.innerHTML = response.data.main.humidity;
@@ -117,6 +122,7 @@ function cityTemperature(response) {
   console.log(
     "cityTitle: " + cityTitle.innerHTML + " City Temp: " + searchedCityTemp
   );
+
   //get info from daily api called with response's lat and lon
   let lat = response.data.coord.lat;
   let lon = response.data.coord.lon;
@@ -137,11 +143,11 @@ axios
 function citySearch(event) {
   event.preventDefault();
   let tipedCity = document.querySelector("#city").value.trim(); //h2select
-  axios
-    .get(`${apiGeocode}q=${tipedCity}&${apiKey}&&units=metric`)
-    .then(cityTemperature);
+  apiFromCitySearch = `${apiGeocode}q=${tipedCity}&${apiKey}&&units=metric`;
+  axios.get(apiFromCitySearch).then(cityTemperature);
   locationButton.addEventListener("click", detectLocation);
   console.log(`Tiped City: ${tipedCity}`);
+  console.log(cityTemperature);
 }
 let form = document.querySelector("#citysearch");
 form.addEventListener("submit", citySearch);
@@ -163,28 +169,86 @@ let locationButton = document.querySelector("#locationicon");
 locationButton.addEventListener("click", detectLocation);
 
 //celsius and fahrenight change
-// dato in celsius non deve cambiare, perche' quei dati ce li ho gia, non conertire da f to c ma fatti dare il dato che hai gia'
+// se clicco su c prima mi calcora su c
+// crea una sola funzione per cambiare temp?
 
-function fTemperature(fNumber) {
-  mainTempertature.innerHTML = Math.round(
-    (mainTempertature.innerHTML * 9) / 5 + 32
-  );
-  console.log(mainTempertature.innerHTML);
+function fTemperature(cNumber, fNumber) {
+  cNumber = mainTempertature.innerHTML;
+  fNumber = Math.round((cNumber * 9) / 5 + 32);
+  mainTempertature.innerHTML = fNumber;
+  console.log(fNumber);
   celsius.style.color = "#ffffff30";
   fahrenight.style.color = "#ffffff";
-  celsius.addEventListener("click", cTemperature);
-  fahrenight.removeEventListener("click", fTemperature);
 
-  function cTemperature(cNumber) {
-    console.log(mainTempertature.innerHTML);
-    let celsiusTemp = Math.round(((mainTempertature.innerHTML - 32) * 5) / 9);
-    mainTempertature.innerHTML = celsiusTemp;
-    celsius.style.color = "#ffffff";
-    fahrenight.style.color = "#ffffff30";
-    console.log(mainTempertature.innerHTML);
-    celsius.removeEventListener("click", cTemperature);
-    fahrenight.addEventListener("click", fTemperature);
-  }
+  //forecast min
+  let t1 = document.querySelectorAll("#t1");
+  let min0 = t1[0];
+  let min1 = t1[1];
+  let min2 = t1[2];
+  let min3 = t1[3];
+  let min4 = t1[4];
+  console.log(min0, min1, min2, min3, min4);
+  min0.innerHTML = Math.round((min0.innerHTML * 9) / 5 + 32);
+  min1.innerHTML = Math.round((min1.innerHTML * 9) / 5 + 32);
+  min2.innerHTML = Math.round((min2.innerHTML * 9) / 5 + 32);
+  min3.innerHTML = Math.round((min3.innerHTML * 9) / 5 + 32);
+  min4.innerHTML = Math.round((min4.innerHTML * 9) / 5 + 32);
+
+  //forecast max
+  let t2 = document.querySelectorAll("#t2");
+  let max0 = t2[0];
+  let max1 = t2[1];
+  let max2 = t2[2];
+  let max3 = t2[3];
+  let max4 = t2[4];
+  console.log(min0, min1, min2, min3, min4);
+  max0.innerHTML = Math.round((max0.innerHTML * 9) / 5 + 32);
+  max1.innerHTML = Math.round((max1.innerHTML * 9) / 5 + 32);
+  max2.innerHTML = Math.round((max2.innerHTML * 9) / 5 + 32);
+  max3.innerHTML = Math.round((max3.innerHTML * 9) / 5 + 32);
+  max4.innerHTML = Math.round((max4.innerHTML * 9) / 5 + 32);
+
+  fahrenight.removeEventListener("click", fTemperature);
   celsius.addEventListener("click", cTemperature);
 }
+
+function cTemperature(cNumber, fNumber) {
+  fNumber = mainTempertature.innerHTML;
+  cNumber = Math.round(((fNumber - 32) * 5) / 9);
+  mainTempertature.innerHTML = cNumber;
+  console.log(cNumber);
+  fahrenight.style.color = "#ffffff30";
+  celsius.style.color = "#ffffff";
+  fahrenight.addEventListener("click", fTemperature);
+  celsius.removeEventListener("click", cTemperature);
+
+  //forecast min
+  let t1 = document.querySelectorAll("#t1");
+  let min0 = t1[0];
+  let min1 = t1[1];
+  let min2 = t1[2];
+  let min3 = t1[3];
+  let min4 = t1[4];
+  console.log(min0, min1, min2, min3, min4);
+  min0.innerHTML = Math.round(((min0.innerHTML - 32) * 5) / 9);
+  min1.innerHTML = Math.round(((min1.innerHTML - 32) * 5) / 9);
+  min2.innerHTML = Math.round(((min2.innerHTML - 32) * 5) / 9);
+  min3.innerHTML = Math.round(((min3.innerHTML - 32) * 5) / 9);
+  min4.innerHTML = Math.round(((min4.innerHTML - 32) * 5) / 9);
+
+  //forecast max
+  let t2 = document.querySelectorAll("#t2");
+  let max0 = t2[0];
+  let max1 = t2[1];
+  let max2 = t2[2];
+  let max3 = t2[3];
+  let max4 = t2[4];
+  console.log(min0, min1, min2, min3, min4);
+  max0.innerHTML = Math.round(((max0.innerHTML - 32) * 5) / 9);
+  max1.innerHTML = Math.round(((max1.innerHTML - 32) * 5) / 9);
+  max2.innerHTML = Math.round(((max2.innerHTML - 32) * 5) / 9);
+  max3.innerHTML = Math.round(((max3.innerHTML - 32) * 5) / 9);
+  max4.innerHTML = Math.round(((max4.innerHTML - 32) * 5) / 9);
+}
+
 fahrenight.addEventListener("click", fTemperature);

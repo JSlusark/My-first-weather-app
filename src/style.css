@@ -109,7 +109,6 @@ margin-top: 14px ;}
   .degrees { 
   margin-bottom: 25px;
 font-size: 15px;}
-  /* color hover doesn't happen after F is selected but pointer changes as expected (from text pounter to default) - create JS function on hover?*/
 
   #C:hover {
     cursor: pointer ;
@@ -119,23 +118,14 @@ font-size: 15px;}
       color: aliceblue
     }
 
-#C:active{
-color: #64ffe8 ;}
 
-
-  /* color hover doesn't happen after F is selected but pointer changes as expected (from text pounter to default) - create JS function on hover?*/
 #F:hover {
   cursor: pointer;
   color: aliceblue ;
 }
 #F:focus {
   color: aliceblue
-}
-#F:active{
-  color: #64ffe8 ;
-  font-size: 15.3px;
- 
-}
+} 
 
 .temptitle{
   font-size: 40px;
@@ -190,11 +180,23 @@ color: #64ffe8 ;}
   width: 60%;
 }
 
-.ptemp {
+#t1, #t2, .circle1, .circle2 {
   margin-bottom: 0px;
   font-size: 10px;
-  font-weight: 300;
+  font-weight:500;
 }
+
+.circle1 {
+padding-right: 10px;
+}
+
+#t1, .circle1 {color: #ffffff70;}
+.circle2 {font-weight: bold;}
+
+#t2 {
+  padding-left: 10px;
+  font-weight: bold;
+  }
 
 #city {
   text-transform: capitalize;
